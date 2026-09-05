@@ -1,36 +1,36 @@
 # NexaBI — Next-Generation Business Intelligence Platform
 
-Platform analitik bisnis berbasis AI untuk customer analytics dan product recommendation pada industri retail. Dibangun di atas dataset Global Superstore (51.290 transaksi, 2012–2015).
+An AI-powered business analytics platform for customer analytics and product recommendation in the retail industry. Built on top of the Global Superstore dataset (51,290 transactions, 2012–2015).
 
-**Capstone Project — PJK-GM040 | Pijak × IBM SkillsBuild**  
-Tema: *AI for Business Intelligence and Market Insights*
+**Capstone Project — PJK-GM040 | Pijak × IBM SkillsBuild**
+Theme: *AI for Business Intelligence and Market Insights*
 
 ---
 
-## Fitur Utama
+## Key Features
 
-| Halaman | Deskripsi |
+| Page | Description |
 |---|---|
-| **Overview** | KPI ringkasan, distribusi cluster Loyal/Pasif, AI Smart Advisor |
-| **Sales Performance** | Revenue per segment, distribusi monetary, recency, pareto kontribusi, AI Sales Forecast |
-| **Analytics** | RFM Scatter Plot, distribusi segment, % loyal, tabel detail RFM |
-| **Market Basket** | Association rules Apriori (106 rules), top bundling ideas |
-| **Top Customers** | Podium top 3 + ranked table 10 pelanggan tertinggi |
-| **Churn Risk** | Monitor pelanggan berisiko churn + AI strategi retensi |
-| **Customers** | CRUD lengkap, search, pagination, export CSV |
-| **AI Chatbot** | Floating chatbot kontekstual di semua halaman dashboard |
+| **Overview** | Summary KPIs, Loyal/Passive cluster distribution, AI Smart Advisor |
+| **Sales Performance** | Revenue per segment, monetary distribution, recency, Pareto contribution, AI Sales Forecast |
+| **Analytics** | RFM scatter plot, segment distribution, loyalty %, detailed RFM table |
+| **Market Basket** | Apriori association rules (106 rules), top bundling ideas |
+| **Top Customers** | Top-3 podium + ranked table of the 10 highest customers |
+| **Churn Risk** | Monitor at-risk customers + AI retention strategies |
+| **Customers** | Full CRUD, search, pagination, CSV export |
+| **AI Chatbot** | Contextual floating chatbot on all dashboard pages |
 
 ---
 
-## Struktur Project
+## Project Structure
 
 ```text
 .
 ├── backend/
 │   ├── app/
 │   │   ├── ai_helper.py       # OpenAI-compatible AI client
-│   │   ├── ai_routes.py       # Endpoint AI: insight, chat, forecast
-│   │   ├── analytics_routes.py # Endpoint analytics extended
+│   │   ├── ai_routes.py       # AI endpoints: insight, chat, forecast
+│   │   ├── analytics_routes.py # Extended analytics endpoints
 │   │   ├── auth.py
 │   │   ├── config.py
 │   │   ├── database.py
@@ -38,8 +38,8 @@ Tema: *AI for Business Intelligence and Market Insights*
 │   │   ├── models.py
 │   │   ├── schemas.py
 │   │   └── seeder.py
-│   ├── df_kmeans.csv              # Data RFM hasil K-Means (1.590 pelanggan)
-│   ├── association_rules.csv      # 106 association rules hasil Apriori
+│   ├── df_kmeans.csv              # K-Means RFM data (1,590 customers)
+│   ├── association_rules.csv      # 106 Apriori association rules
 │   ├── Market Basket Analysis (Apriori).ipynb
 │   ├── docker-compose.yml
 │   ├── Dockerfile
@@ -47,8 +47,8 @@ Tema: *AI for Business Intelligence and Market Insights*
 │   └── .env
 └── frontend/
     ├── src/
-    │   ├── pages/             # 9 halaman dashboard
-    │   ├── components/        # Sidebar, ChatbotWidget, dll
+    │   ├── pages/             # 9 dashboard pages
+    │   ├── components/        # Sidebar, ChatbotWidget, etc.
     │   ├── layouts/
     │   └── api/axios.js       # Axios + JWT interceptor
     ├── package.json
@@ -57,43 +57,43 @@ Tema: *AI for Business Intelligence and Market Insights*
 
 ---
 
-## Prasyarat
+## Prerequisites
 
-- Docker & Docker Compose (direkomendasikan)
-- Atau: Python 3.10+, Node.js 20+, PostgreSQL 15
+- Docker & Docker Compose (recommended)
+- Or: Python 3.10+, Node.js 20+, PostgreSQL 15
 
 ---
 
-## Jalankan dengan Docker (Direkomendasikan)
+## Run with Docker (Recommended)
 
-### 1. Buat network Docker
+### 1. Create the Docker network
 
 ```bash
 docker network create nexabi_shared_net
 ```
 
-### 2. Jalankan backend (FastAPI + PostgreSQL)
+### 2. Start the backend (FastAPI + PostgreSQL)
 
 ```bash
 cd backend
 docker compose up --build -d
 ```
 
-Backend tersedia di `http://localhost:5000`  
+Backend available at `http://localhost:5000`
 Swagger docs: `http://localhost:5000/docs`
 
-### 3. Jalankan frontend (React + Nginx)
+### 3. Start the frontend (React + Nginx)
 
 ```bash
 cd frontend
 docker compose up --build -d
 ```
 
-Frontend tersedia di `http://localhost:3000`
+Frontend available at `http://localhost:3000`
 
 ---
 
-## Jalankan Tanpa Docker
+## Run Without Docker
 
 ### Backend
 
@@ -102,7 +102,7 @@ cd backend
 python -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
-cp .env.example .env   # sesuaikan DATABASE_URL dan SECRET_KEY
+cp .env.example .env   # adjust DATABASE_URL and SECRET_KEY
 uvicorn app.main:app --host 0.0.0.0 --port 5000 --reload
 ```
 
@@ -111,7 +111,7 @@ uvicorn app.main:app --host 0.0.0.0 --port 5000 --reload
 ```bash
 cd frontend
 npm install
-# Buat .env untuk arahkan ke backend lokal:
+# Create a .env pointing to the local backend:
 echo "VITE_API_BASE_URL=http://localhost:5000/api" > .env
 npm run dev
 ```
@@ -120,59 +120,59 @@ npm run dev
 
 ## Environment Variables (backend/.env)
 
-| Variable | Keterangan |
+| Variable | Description |
 |---|---|
-| `DATABASE_URL` | Koneksi PostgreSQL |
-| `SECRET_KEY` | Secret untuk signing JWT |
-| `CSV_FILE_PATH` | Path file CSV data RFM (default: `df_kmeans.csv`) |
-| `CORS_ORIGINS` | Origin frontend yang diizinkan (pisah koma) |
-| `OPENAI_BASE_URL` | Base URL OpenAI-compatible API untuk AI features |
-| `OPENAI_API_KEY` | API key untuk AI service |
-| `OPENAI_MODEL` | Nama model yang digunakan |
-| `GEMINI_API_KEY` | (Opsional) Gemini API key |
+| `DATABASE_URL` | PostgreSQL connection |
+| `SECRET_KEY` | Secret used for signing JWTs |
+| `CSV_FILE_PATH` | Path to the RFM data CSV file (default: `df_kmeans.csv`) |
+| `CORS_ORIGINS` | Allowed frontend origins (comma-separated) |
+| `OPENAI_BASE_URL` | Base URL of the OpenAI-compatible API for AI features |
+| `OPENAI_API_KEY` | API key for the AI service |
+| `OPENAI_MODEL` | Name of the model used |
+| `GEMINI_API_KEY` | (Optional) Gemini API key |
 
 ---
 
-## Endpoint API Lengkap
+## Complete API Endpoints
 
 ### Authentication
-| Method | Endpoint | Deskripsi |
+| Method | Endpoint | Description |
 |---|---|---|
-| POST | `/api/auth/register` | Registrasi user baru |
-| POST | `/api/auth/login` | Login, return JWT token |
+| POST | `/api/auth/register` | Register a new user |
+| POST | `/api/auth/login` | Login, returns a JWT token |
 
 ### Analytics
-| Method | Endpoint | Deskripsi |
+| Method | Endpoint | Description |
 |---|---|---|
-| GET | `/api/analytics/overview` | KPI ringkasan (total, loyal, pasif, avg monetary) |
-| GET | `/api/analytics/rfm-scatter` | Data scatter plot RFM semua pelanggan |
-| GET | `/api/analytics/segment-stats` | Statistik per segment |
-| GET | `/api/analytics/top-customers` | Top 10 pelanggan by monetary |
-| GET | `/api/analytics/churn-risk` | Daftar pelanggan berisiko churn |
-| GET | `/api/analytics/market-basket` | Association rules Apriori |
-| GET | `/api/analytics/sales-performance` | Revenue, orders, distribusi per segment |
+| GET | `/api/analytics/overview` | Summary KPIs (total, loyal, passive, avg monetary) |
+| GET | `/api/analytics/rfm-scatter` | RFM scatter plot data for all customers |
+| GET | `/api/analytics/segment-stats` | Statistics per segment |
+| GET | `/api/analytics/top-customers` | Top 10 customers by monetary |
+| GET | `/api/analytics/churn-risk` | List of at-risk customers |
+| GET | `/api/analytics/market-basket` | Apriori association rules |
+| GET | `/api/analytics/sales-performance` | Revenue, orders, distribution per segment |
 
 ### AI Features
-| Method | Endpoint | Deskripsi |
+| Method | Endpoint | Description |
 |---|---|---|
-| GET | `/api/analytics/ai-insight` | Generate AI insight dari data overview |
-| GET | `/api/analytics/churn-ai` | Analisis churn + strategi retensi AI |
-| GET | `/api/analytics/sales-forecast` | Proyeksi penjualan bulan depan |
-| POST | `/api/analytics/chat` | Chatbot interaktif kontekstual |
+| GET | `/api/analytics/ai-insight` | Generate an AI insight from the overview data |
+| GET | `/api/analytics/churn-ai` | Churn analysis + AI retention strategies |
+| GET | `/api/analytics/sales-forecast` | Next month's sales forecast |
+| POST | `/api/analytics/chat` | Contextual interactive chatbot |
 
 ### Customer CRUD
-| Method | Endpoint | Deskripsi |
+| Method | Endpoint | Description |
 |---|---|---|
-| GET | `/api/customers` | List semua customer |
-| POST | `/api/customers` | Tambah customer baru |
-| PUT | `/api/customers/{customer_id}` | Update data customer |
-| DELETE | `/api/customers/{customer_id}` | Hapus customer |
+| GET | `/api/customers` | List all customers |
+| POST | `/api/customers` | Add a new customer |
+| PUT | `/api/customers/{customer_id}` | Update customer data |
+| DELETE | `/api/customers/{customer_id}` | Delete a customer |
 
-> Semua endpoint kecuali auth membutuhkan header: `Authorization: Bearer <token>`
+> All endpoints except auth require the header: `Authorization: Bearer <token>`
 
 ---
 
-## Auto-Start dengan Systemd (VPS/VM)
+## Auto-Start with Systemd (VPS/VM)
 
 ```bash
 sudo cp backend/nexabi-backend.service /etc/systemd/system/
@@ -184,7 +184,7 @@ sudo systemctl enable --now nexabi-backend
 
 ## Tech Stack
 
-| Layer | Teknologi |
+| Layer | Technology |
 |---|---|
 | Frontend | React 19, Vite, Tailwind CSS, Recharts, Lucide |
 | Backend | FastAPI, SQLAlchemy, Pydantic, Uvicorn |
@@ -197,20 +197,20 @@ sudo systemctl enable --now nexabi-backend
 
 ## Dataset
 
-**Global Superstore Sales Dataset** — Kaggle (CC0: Public Domain)  
-51.290 baris, 24 kolom, periode 2012–2015  
+**Global Superstore Sales Dataset** — Kaggle (CC0: Public Domain)
+51,290 rows, 24 columns, 2012–2015 period
 [kaggle.com/datasets/apoorvaappz/global-super-store-dataset](https://kaggle.com/datasets/apoorvaappz/global-super-store-dataset)
 
 ---
 
-## Tim
+## Team
 
-**ID Tim:** PJK-GM040 | Pijak × IBM SkillsBuild
+**Team ID:** PJK-GM040 | Pijak × IBM SkillsBuild
 
-| Nama | Learning Path | Tanggung Jawab |
+| Name | Learning Path | Responsibilities |
 |---|---|---|
 | Michael Sanjaya | Machine Learning | Data collection, cleaning, EDA, preprocessing pipeline |
-| Irisaliya Irhabiyah Banat | Machine Learning | Feature engineering, K-Means clustering, Apriori MBA, evaluasi model |
-| Muhromin | Backend | REST API, database, autentikasi |
-| Ahmad Fauzul Adhim | Frontend | UI/UX dashboard, chart interaktif, responsivitas |
-| Muhammad Daffa Amrullah | DevOps | CI/CD, Docker, deploy cloud, dokumentasi teknis |
+| Irisaliya Irhabiyah Banat | Machine Learning | Feature engineering, K-Means clustering, Apriori MBA, model evaluation |
+| Muhromin | Backend | REST API, database, authentication |
+| Ahmad Fauzul Adhim | Frontend | Dashboard UI/UX, interactive charts, responsiveness |
+| Muhammad Daffa Amrullah | DevOps | CI/CD, Docker, cloud deployment, technical documentation |
