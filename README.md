@@ -214,3 +214,7 @@ sudo systemctl enable --now nexabi-backend
 | Muhromin | Backend | REST API, database, authentication |
 | Ahmad Fauzul Adhim | Frontend | Dashboard UI/UX, interactive charts, responsiveness |
 | Muhammad Daffa Amrullah | DevOps | CI/CD, Docker, cloud deployment, technical documentation |
+
+<!-- last-updated -->
+_Last updated: 2026-09-05_
+
